@@ -1,52 +1,95 @@
-import winsound  # Biblioteca para reproduzir sons no Windows
-
 # ============================================
-# FUNÇÃO DE MULTIPLICAÇÃO
+# CALCULADORA DE MULTIPLICAÇÃO
 # ============================================
 
+import sys
+
+# --------------------------------------------
+# FUNÇÃO PARA TOCAR SOM
+# --------------------------------------------
 def tocar_som():
-    """Toca um bip quando o cálculo é realizado"""
-    winsound.Beep(1000, 300)  # frequência 1000Hz por 300ms
+    """Toca um bip quando o cálculo é realizado (apenas no Windows)"""
+    try:
+        if sys.platform == "win32":
+            import winsound
+            winsound.Beep(1000, 300)
+    except:
+        pass
 
+
+# --------------------------------------------
+# FUNÇÃO DE MULTIPLICAÇÃO
+# --------------------------------------------
 def multiplicar(a, b):
     """
     Recebe dois números e retorna o resultado da multiplicação
-    Parâmetros:
-        a: primeiro número
-        b: segundo número
-    Retorno:
-        resultado da multiplicação
     """
-    resultado = a * b
-    return resultado
+    return a * b
 
+
+# --------------------------------------------
+# TESTE DRIVER (testa a função multiplicar)
+# --------------------------------------------
+def teste_driver():
+    print("\n=== TESTE DRIVER DA FUNÇÃO MULTIPLICAR ===")
+
+    testes = [
+        (2, 3),
+        (5, 0),
+        (-4, 6),
+        (1.5, 2),
+        (-3, -3)
+    ]
+
+    for a, b in testes:
+        resultado = multiplicar(a, b)
+        print(f"Teste: {a} x {b} = {resultado}")
+
+    print("=== FIM DOS TESTES ===\n")
+
+
+# --------------------------------------------
+# FUNÇÃO PRINCIPAL
+# --------------------------------------------
 def executar_multiplicacao():
-    """Função principal que interage com o usuário"""
-    
     print("=" * 35)
     print("   CALCULADORA - MULTIPLICAÇÃO")
     print("=" * 35)
-    
-    try:
-        # Solicita os números ao usuário
-        num1 = float(input("\nDigite o primeiro número: "))
-        num2 = float(input("Digite o segundo número:  "))
-        
-        # Realiza o cálculo
-        resultado = multiplicar(num1, num2)
-        
-        # Toca o som
-        tocar_som()
-        
-        # Exibe o resultado formatado
-        print("\n" + "-" * 35)
-        print(f"  {num1} x {num2} = {resultado}")
-        print("-" * 35)
-        
-    except ValueError:
-        # Captura erro se o usuário digitar algo inválido
-        print("\n❌ Erro: Digite apenas números válidos!")
 
-# Ponto de entrada do programa
+    while True:
+        try:
+            # entrada de dados
+            num1 = float(input("\nDigite o primeiro número: "))
+            num2 = float(input("Digite o segundo número: "))
+
+            # cálculo
+            resultado = multiplicar(num1, num2)
+
+            # som
+            tocar_som()
+
+            # saída formatada
+            print("\n" + "-" * 35)
+            print(f"{num1:.2f} x {num2:.2f} = {resultado:.2f}")
+            print("-" * 35)
+
+        except ValueError:
+            print("\nErro: Digite apenas números válidos!")
+
+        # pergunta se quer continuar
+        continuar = input("\nDeseja fazer outro cálculo? (s/n): ").lower()
+        if continuar != "s":
+            print("\nPrograma encerrado.")
+            break
+
+
+# --------------------------------------------
+# PONTO DE ENTRADA
+# --------------------------------------------
 if __name__ == "__main__":
+    
+    # executa testes da função
+    teste_driver()
+
+    # executa a calculadora
     executar_multiplicacao()
