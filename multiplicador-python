@@ -1,0 +1,52 @@
+import winsound  # Biblioteca para reproduzir sons no Windows
+
+# ============================================
+# FUNÇÃO DE MULTIPLICAÇÃO
+# ============================================
+
+def tocar_som():
+    """Toca um bip quando o cálculo é realizado"""
+    winsound.Beep(1000, 300)  # frequência 1000Hz por 300ms
+
+def multiplicar(a, b):
+    """
+    Recebe dois números e retorna o resultado da multiplicação
+    Parâmetros:
+        a: primeiro número
+        b: segundo número
+    Retorno:
+        resultado da multiplicação
+    """
+    resultado = a * b
+    return resultado
+
+def executar_multiplicacao():
+    """Função principal que interage com o usuário"""
+    
+    print("=" * 35)
+    print("   CALCULADORA - MULTIPLICAÇÃO")
+    print("=" * 35)
+    
+    try:
+        # Solicita os números ao usuário
+        num1 = float(input("\nDigite o primeiro número: "))
+        num2 = float(input("Digite o segundo número:  "))
+        
+        # Realiza o cálculo
+        resultado = multiplicar(num1, num2)
+        
+        # Toca o som
+        tocar_som()
+        
+        # Exibe o resultado formatado
+        print("\n" + "-" * 35)
+        print(f"  {num1} x {num2} = {resultado}")
+        print("-" * 35)
+        
+    except ValueError:
+        # Captura erro se o usuário digitar algo inválido
+        print("\n❌ Erro: Digite apenas números válidos!")
+
+# Ponto de entrada do programa
+if __name__ == "__main__":
+    executar_multiplicacao()
